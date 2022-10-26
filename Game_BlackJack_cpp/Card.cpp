@@ -24,29 +24,38 @@ std::array<char, SIZE_RANK>rankSymbols
 	static_cast<char>(65)
 };
 
+//////////////////////////////////////////////////////////////////////////////////// Public
+////////////////////////////////////////////////////////////// Ctor
 Card::Card()
-	:m_value(0), m_rank{ 0 }, m_suit{ 0 } {};
+	:m_rank{ static_cast<Rank>(0) }, m_suit{ static_cast<Suit>(0) } {};
 
-Card::Card(const std::int16_t number)
-	:m_value(0), m_rank{ 0 }, m_suit{ 0 }
-{
-	setCard(number);
-}
 
+////////////////////////////////////////////////////////////// Get & set
 const std::string& Card::getName() const
 {
 	return m_name;
 }
 
-void Card::setCard(const std::int16_t number)
+const Rank& Card::getRank() const
 {
-	m_rank = number % SIZE_RANK;
-	m_suit = number / SIZE_RANK;
+	return m_rank;
+}
 
+void Card::setCard(const Suit& suit, const Rank& rank)
+{
+	m_suit = suit;
+	m_rank = rank;
+
+	setName();
+}
+
+//////////////////////////////////////////////////////////////////////////////////// Private
+////////////////////////////////////////////////////////////// Get & set
+void Card::setName()
+{
 	m_name += rankSymbols[m_rank];
 	if (m_rank == Rank::TEN)
 		m_name += static_cast<char>(48);
-	m_name += ' ';
+	//m_name += ' ';
 	m_name += suitSymbols[m_suit];
 }
-

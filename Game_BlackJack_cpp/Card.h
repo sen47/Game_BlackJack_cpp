@@ -10,15 +10,18 @@ enum Rank { TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, K
 struct Card
 {
 public:
+	////////////////////////////////////// Ctor
 	Card();
-	Card(const std::int16_t number);
 
+	////////////////////////////////////// Get & set
 	const std::string& getName()const;
-	void setCard(const std::int16_t number);
+	const Rank& getRank()const;
+	void setCard(const Suit& suit, const Rank& rank);
 
 private:
-	std::int16_t m_suit, m_rank;
+	void setName();
 
+	Suit m_suit;
+	Rank m_rank;
 	std::string m_name;
-	std::int16_t m_value;
 };

@@ -1,6 +1,4 @@
-﻿  Card.cpp
-  CardDeck.cpp
-  Main.cpp
-C:\Projects VS\Game_BlackJack_cpp\Game_BlackJack_cpp\Main.cpp(8,39): warning C4267: аргумент: преобразование из "size_t" в "unsigned int"; возможна потеря данных
-  Создание кода...
+﻿  Main.cpp
+C:\Projects VS\Game_BlackJack_cpp\Game_BlackJack_cpp\Main.cpp(26,39): warning C4267: аргумент: преобразование из "size_t" в "unsigned int"; возможна потеря данных
+C:\Projects VS\Game_BlackJack_cpp\Game_BlackJack_cpp\Main.cpp(100): warning C4715: getWhoMove: значение возвращается не при всех путях выполнения
   Game_BlackJack_cpp.vcxproj -> C:\Projects VS\Game_BlackJack_cpp\x64\Debug\Game_BlackJack_cpp.exe
