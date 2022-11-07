@@ -3,6 +3,7 @@
 #include<cstdint>
 #include<thread>
 #include<chrono>
+#include<Windows.h>
 
 #include"CardDeck.h"
 #include"Actor.h"
@@ -17,15 +18,15 @@ enum WhoMove
 	PlayerMove = 1, DeallerMove
 };
 
-std::string getWhoMove(const WhoMove currentMove);
 std::int16_t checkInput(const std::string& output, const int min, const int max);
-void printCard(const Actor& actor);
+void printField(const Actor& dealer, const Actor& player, const std::int32_t bet = 0);
 
 int main()
 {
 	srand(static_cast<size_t>(time(NULL)));
 
-	Actor player, dealer;
+	Actor player("Player", 1000), dealer("Dealer", 10000);
+
 	CardDeck deck;
 	Card* ptr_currentCard = &deck.getFirstCard();
 
@@ -41,33 +42,38 @@ int main()
 	}
 
 	WhoMove currentMove = PlayerMove;
-	int player_answer;
+	bool isWin(false);
 	do
 	{
+		system("cls");
+
 		std::cout << "Dialler have " << dealer[0].getName() << ", and one unknown.";
 		std::cout << "\n\n" << getWhoMove(currentMove) << "\'s card is: ";
+		
 		printCard(player);
+		
 		if (player.getScore() > 21)
-			return false;
+			break;
 		if (player.getScore() == 21)
 		{
 			currentMove = DeallerMove;
-			system("cls");
 			break;
 		}
-		player_answer = checkInput("\n\n1 - to hit, 2 - to stand, 0 - to exit", 0, 2);
+		
+		int player_answer = checkInput("\n\n1 - to hit, 2 - to stand, 0 - to exit", 0, 2);
 		switch (player_answer)
 		{
 		case Hit:
 			player.addCard(ptr_currentCard);
 			system("cls");
 			break;
+			break;
 		case Stand:
 			currentMove = DeallerMove;
 			system("cls");
 			break;
 		}
-	} while (player_answer == PlayerMove);
+	} while (currentMove == PlayerMove);
 
 	std::cout << getWhoMove(PlayerMove) << "\'s card is: ";
 	printCard(player);
@@ -86,17 +92,6 @@ int main()
 	return (21 - player.getScore()) <= (21 - dealer.getScore());
 
 	return 0;
-}
-
-std::string getWhoMove(const WhoMove currentMove)
-{
-	switch (currentMove)
-	{
-	case PlayerMove:
-		return "Player";
-	case DeallerMove:
-		return "Dealler";
-	}
 }
 
 std::int16_t checkInput(const std::string& output, const int min, const int max)
@@ -133,7 +128,26 @@ std::int16_t checkInput(const std::string& output, const int min, const int max)
 
 void printCard(const Actor& actor)
 {
+	
 	for (int i = 0; i < actor.getCardsCount(); ++i)
-		std::cout << actor.getCard(i).getName() << ' ';
-	std::cout << "\nScore is " << actor.getScore();
+		std::cout << actor[i].getName() << ' ';
+	std::cout << " Score is " << actor.getScore();
+}
+
+void printInfo(const Actor& actor)
+{
+	std::cout << actor.getName();
+	printCard(actor);
+	std::cout << actor.getMoney();
+}
+
+void printField(const Actor& dealer, const Actor& player, const std::int32_t bet = 0)
+{
+	printInfo(dealer);
+
+	std::cout << "\n\n";
+	std::cout << "Your bet is " << bet;
+	std::cout << "\n\n";
+
+	printInfo(player);
 }

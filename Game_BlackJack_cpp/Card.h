@@ -16,6 +16,7 @@ public:
 	////////////////////////////////////// Get & set
 	const std::string& getName()const;
 	const Rank& getRank()const;
+
 	void setCard(const Suit& suit, const Rank& rank);
 
 private:
